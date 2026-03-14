@@ -115,10 +115,10 @@ def rgb_to_english_name(rgb: Tuple[int, int, int], lang: str = "English") -> str
     }
     hues = {
         "English": [
-            "red", "red-orange", "orange", "yellow-orange", "yellow", "yellow-green", "green", "spring green", "cyan", "sky blue", "blue", "violet", "magenta", "rose"
+            "red", "red-orange", "orange", "amber", "yellow-orange", "yellow", "chartreuse", "lime", "yellow-green", "olive", "green", "mint", "spring green", "teal", "cyan", "sky blue", "azure", "blue", "indigo", "violet", "lavender", "magenta", "rose", "coral", "peach"
         ],
         "Spanish": [
-            "rojo", "rojo anaranjado", "naranja", "naranja amarillento", "amarillo", "amarillo verdoso", "verde", "verde primavera", "cian", "azul cielo", "azul", "violeta", "magenta", "rosa"
+            "rojo", "rojo anaranjado", "naranja", "naranja amarillento", "amarillo", "amarillo verdoso", "verde", "verde primavera", "cian", "azul ciel", "azul", "violeta", "magenta", "rosa"
         ],
         "French": [
             "rouge", "rouge-orangé", "orange", "orange-jaune", "jaune", "jaune-vert", "vert", "vert printemps", "cyan", "bleu ciel", "bleu", "violet", "magenta", "rose"
@@ -158,24 +158,12 @@ def rgb_to_english_name(rgb: Tuple[int, int, int], lang: str = "English") -> str
         ]
     }
 
-    if v < 0.08:
-        return descriptors[lang]["black"]
-
-    if s < 0.10:
-        if v < 0.25:
-            return descriptors[lang]["dark gray"]
-        if v < 0.75:
-            return descriptors[lang]["gray"]
-        if v < 0.93:
-            return descriptors[lang]["light gray"]
-        return descriptors[lang]["white"]
-
-    hue_deg = h * 360
-    hue_boundaries = [0, 15, 35, 50, 65, 85, 145, 170, 200, 220, 250, 280, 315, 340, 360]
+    # Expanded hue boundaries for more nuanced color names
+    hue_boundaries = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 110, 130, 150, 170, 190, 210, 230, 250, 270, 290, 310, 330, 350, 360]
     hue_labels = hues[lang]
     hue_label = hue_labels[0]
     for i, boundary in enumerate(hue_boundaries):
-        if hue_deg <= boundary:
+        if h * 360 <= boundary:
             hue_label = hue_labels[i]
             break
 
